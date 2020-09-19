@@ -15,8 +15,7 @@
 	import Topbar from "./components/Topbar"
 	import Main from "./components/Main"
 	import Tabs from "./components/Tabs"
-	import Footer from "./components/Footer";
-
+	import Footer from "./components/Footer"
 
 	export default {
 		name: "Layout",

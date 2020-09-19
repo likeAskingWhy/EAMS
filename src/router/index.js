@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from "../layout/Layout"
+import Empty from "../layout/Empty"
 
 Vue.use(VueRouter)
 
@@ -10,8 +11,14 @@ const routes = [
     component: Layout,
     name: 'Layout',
     children: [
-      {path: '/user', name: 'Name', component: () => import('../views/system/User'), meta: {title: '用户管理'}},
-      {path: '/role', name: 'Role', component: () => import('../views/system/Role'), meta: {title: '角色管理'}}
+      {
+        path: '/system',
+        component: Empty,
+        children: [
+          {path: '/user', name: 'Name', component: () => import('../views/system/User'), meta: {title: '用户管理'}},
+          {path: '/role', name: 'Role', component: () => import('../views/system/Role'), meta: {title: '角色管理'}}
+        ]
+      }
     ]
   }
 ]

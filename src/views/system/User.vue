@@ -6,7 +6,11 @@
 
 <script>
 	export default {
-		name: "User"
+		name: "User",
+        created() {
+	        console.log(111);
+	        console.log(this.$route);
+        }
 	}
 </script>
 
