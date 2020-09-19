@@ -11,22 +11,22 @@
 </template>
 
 <script>
-    import Sidebar from "./components/Sidebar"
-    import Topbar from "./components/Topbar"
-    import Main from "./components/Main"
-    import Tabs from "./components/Tabs"
-    import Footer from "./components/Footer";
+	import Sidebar from "./components/Sidebar"
+	import Topbar from "./components/Topbar"
+	import Main from "./components/Main"
+	import Tabs from "./components/Tabs"
+	import Footer from "./components/Footer";
 
 
-    export default {
+	export default {
 		name: "Layout",
-        components: {
-	        Footer,
-	        Topbar,
+		components: {
+			Footer,
+			Topbar,
 			Sidebar,
-	        Main,
-	        Tabs
-        }
+			Main,
+			Tabs
+		}
 	}
 </script>
 
@@ -35,10 +35,12 @@
         display: flex;
         justify-content: flex-start;
         height: 100vh;
+
         .right-container {
             flex: 1;
             display: flex;
             flex-direction: column;
+
             .main-container {
                 flex: 1;
             }

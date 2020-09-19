@@ -20,19 +20,11 @@
             </el-menu-item>
             <el-submenu index="1">
                 <template slot="title">
-                    <i class="el-icon-user"></i>
-                    <span>用户管理</span>
+                    <i class="el-icon-setting"></i>
+                    <span>系统管理</span>
                 </template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">
-                    <i class="el-icon-user"></i>
-                    <span>学籍管理</span>
-                </template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
+                <el-menu-item index="/user">用户管理</el-menu-item>
+                <el-menu-item index="/role">角色管理</el-menu-item>
             </el-submenu>
         </el-menu>
 

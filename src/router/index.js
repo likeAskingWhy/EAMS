@@ -7,8 +7,12 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    component: Layout,
     name: 'Layout',
-    component: Layout
+    children: [
+      {path: '/user', name: 'Name', component: () => import('../views/system/User'), meta: {title: '用户管理'}},
+      {path: '/role', name: 'Role', component: () => import('../views/system/Role'), meta: {title: '角色管理'}}
+    ]
   }
 ]
 

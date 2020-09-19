@@ -68,7 +68,7 @@
 			},
 			// 关闭标签时调用
 			removeTab(targetName) {
-				let tabs = this.$store.getters.routesTab
+				let tabs = this.$store.getters.tabList
 				let activeName = this.tabControl.tabName
 				if (activeName === targetName) {
 					tabs.forEach((tab, index) => {
