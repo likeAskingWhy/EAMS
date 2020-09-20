@@ -1,14 +1,15 @@
 <template>
-    <div class="common-table">
+    <div class="table-pagination">
+        <!-- 公共表格+分页组件 -->
         <el-table
                 :data="sliceTableData"
                 show-overflow-tooltip
-                height="700px"
+                height="528"
+                stripe
                 :header-cell-style="{background: '#F8F8F9', color: '#666'}">
             <template v-for="column in tableConfig.columns">
                 <el-table-column
                         v-if="column.slot"
-                        align="center"
                         :label="column.label"
                         :prop="column.prop"
                         :key="column.prop">
@@ -21,7 +22,6 @@
                 </el-table-column>
                 <el-table-column
                         v-else
-                        align="center"
                         :label="column.label"
                         :prop="column.prop"
                         :key="column.prop"
@@ -46,7 +46,7 @@
 
 <script>
 	export default {
-		name: "CommonTable",
+		name: "TablePagination",
 		props: {
 			/** 表格配置 */
 			tableConfig: {
@@ -104,14 +104,12 @@
 </script>
 
 <style scoped lang="scss">
-    .common-table {
+    .table-pagination {
         .el-table {
-            margin-bottom: 20px;
-            width: 100%;
+            margin-bottom: 30px;
         }
-        /*.el-pagination {*/
-        /*    position: absolute;*/
-        /*    left: 50%;*/
-        /*}*/
+        .el-pagination {
+            float: right;
+        }
     }
 </style>

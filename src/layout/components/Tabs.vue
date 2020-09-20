@@ -125,23 +125,24 @@
                     border-radius: 0;
                     width: 25px;
                     padding: 0;
-                    height: 29px;
+                    height: 30px;
                 }
             }
         }
         .tabs-tag {
             /deep/ .el-tabs__header {
                 margin: 0;
+                border-bottom: none;
                 .el-tabs__nav {
                     border: none !important;
                     .el-tabs__item {
                         font-family: '微软雅黑';
                         font-size: 14px;
                         color: #8c939d;
-                        height: 31px;
-                        border: 1px solid #ddd;
+                        height: 30px;
+                        border: 1px solid #409EFF;
                         padding: 0 10px;
-                        line-height: 31px;
+                        line-height: 30px;
                         margin-left: 5px;
                     }
                     .is-active {

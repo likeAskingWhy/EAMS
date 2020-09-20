@@ -3,7 +3,7 @@
  * */
 export const user_tree_data = [
 	{
-		label: '永安大学',
+		label: '银河大学',
 		id: 'root',
 		children: [
 			{

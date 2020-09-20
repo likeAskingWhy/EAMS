@@ -12,9 +12,8 @@
 
 <style scoped lang="scss">
     .main-container {
-        /*height: calc(100vh - 120px);*/
         box-sizing: border-box;
-        padding: 15px;
-        background: #EEF0F3;
+        padding: 20px;
+        height: calc(100% - 120px);
     }
 </style>

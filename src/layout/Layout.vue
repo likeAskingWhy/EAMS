@@ -32,17 +32,10 @@
 <style scoped lang="scss">
     .layout-container {
         display: flex;
-        justify-content: flex-start;
-        height: 100vh;
+        justify-content: space-between;
 
         .right-container {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-
-            .main-container {
-                flex: 1;
-            }
         }
     }
 </style>

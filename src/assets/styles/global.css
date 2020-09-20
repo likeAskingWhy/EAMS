@@ -3,3 +3,14 @@ html, body, #app {
     margin: 0;
     height: 100%;
 }
+/*全局滚动条设置*/
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #8CC5FF;
+    border-radius: 5px;
+    display: none;
+}
