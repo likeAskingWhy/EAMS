@@ -10,9 +10,10 @@
             </el-input>
             <el-tree
                     :data="treeData"
+                    :props="treeProps"
                     highlight-current
                     node-key="id"
-                    :default-expanded-keys="[1]"
+                    :default-expanded-keys="[10]"
                     accordion>
             </el-tree>
         </div>
@@ -33,7 +34,7 @@
                     </el-form-item>
                 </el-form>
                 <div class="crud-menu">
-                    <el-button type="success" icon="el-icon-plus" size="small">新增</el-button>
+                    <el-button type="success" icon="el-icon-plus" size="small" @click="add(form)">新增</el-button>
                     <el-button type="primary" icon="el-icon-edit" size="small">编辑</el-button>
                     <el-button type="danger" disabled icon="el-icon-delete" size="small">删除</el-button>
                     <el-button type="warning" icon="el-icon-upload2" size="small">导入</el-button>
@@ -65,6 +66,11 @@
 			return {
 				queryInfo: '',
                 treeData: [],
+				treeProps: {
+                    label: data => {
+                    	return `[${data.id}] ` + data.label
+                    }
+                },
                 tableConfig: {
 					tableData: [
                         {_id: '20200919000101', adminname: 'zhangxiaozhang', owner: '张均浩', createdAt: '2020-09-19'},
@@ -112,8 +118,8 @@
             }
         },
         created() {
-			this.treeData = user_tree_data                  // 获取表格数据
-            this.tableConfig.columns = user_columns         // 获取表格配置
+			this.treeData = user_tree_data                          // 获取表格数据
+            this.tableConfig.columns = user_columns                 // 获取表格配置
         }
     }
 </script>

@@ -6,7 +6,7 @@
                 show-overflow-tooltip
                 height="528"
                 stripe
-                :header-cell-style="{background: '#F8F8F9', color: '#666'}">
+                :header-cell-style="{background: '#F0F7FF', color: '#666'}">
             <template v-for="column in tableConfig.columns">
                 <el-table-column
                         v-if="column.slot"
