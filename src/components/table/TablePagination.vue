@@ -5,12 +5,12 @@
                 :data="sliceTableData"
                 show-overflow-tooltip
                 height="528"
-                stripe
                 :header-cell-style="{background: '#F0F7FF', color: '#666'}">
             <template v-for="column in tableConfig.columns">
                 <el-table-column
                         v-if="column.slot"
                         :label="column.label"
+                        align="center"
                         :prop="column.prop"
                         :key="column.prop">
                     <template slot-scope="scope">
@@ -22,6 +22,7 @@
                 </el-table-column>
                 <el-table-column
                         v-else
+                        align="center"
                         :label="column.label"
                         :prop="column.prop"
                         :key="column.prop"
@@ -36,7 +37,6 @@
                 prev-text="上一页"
                 next-text="下一页"
                 background
-                hide-on-single-page
                 :page-size="paginationConfig.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="tableConfig.tableData.length">

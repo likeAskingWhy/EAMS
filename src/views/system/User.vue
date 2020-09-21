@@ -34,11 +34,11 @@
                     </el-form-item>
                 </el-form>
                 <div class="crud-menu">
-                    <el-button type="success" icon="el-icon-plus" size="small" @click="add(form)">新增</el-button>
+                    <el-button type="success" icon="el-icon-plus" size="small">新增</el-button>
                     <el-button type="primary" icon="el-icon-edit" size="small">编辑</el-button>
                     <el-button type="danger" disabled icon="el-icon-delete" size="small">删除</el-button>
                     <el-button type="warning" icon="el-icon-upload2" size="small">导入</el-button>
-                    <el-button type="default" icon="el-icon-download" size="small">导出</el-button>
+                    <el-button type="default" icon="el-icon-download" size="small" @click="exportData">导出</el-button>
                     <el-button type="warning" plain icon="el-icon-refresh" size="small" style="float: right">重置</el-button>
                     <el-button type="primary" plain icon="el-icon-search" size="small" style="float: right">搜索</el-button>
                 </div>
@@ -48,6 +48,10 @@
                     :pagination-config="paginationConfig"
                     @handleSizeChange="handleSizeChange"
                     @handleCurrentChange="handleCurrentChange">
+                <template v-slot:createDate="slot">{{slot.scope.row.createdAt}}</template>
+                <template v-slot:operation="slot">
+                    <el-button type="default" size="small" @click="getDetailInfo(slot.scope.row)">详情</el-button>
+                </template>
             </table-pagination>
         </div>
     </div>
@@ -58,6 +62,7 @@
     import {user_columns} from "../../resource/columns"
     import TablePagination from "../../components/table/TablePagination"
     import CommonCard from "../../components/card/CommonCard"
+    import {exportToExcelFile} from "../../utils/tools"
 
     export default {
 		name: "User",
@@ -102,7 +107,7 @@
                 },
 				paginationConfig: {
                     currentPage: 1,
-                    pageSizes: [10, 20, 50, 100],
+                    pageSizes: [10, 20, 50, 100, 1000],
                     pageSize: 10
                 },
 			}
@@ -115,6 +120,14 @@
 	        /** 分页组件中当前页码变化时调用 */
 	        handleCurrentChange(val) {
 	        	this.paginationConfig.currentPage = val
+            },
+            /** 查看详情信息 */
+	        getDetailInfo(row) {
+	            console.log(row);
+            },
+            /** 将数据导出为Excel文件 */
+	        exportData() {
+	        	exportToExcelFile(document.querySelector('.el-table'))
             }
         },
         created() {
@@ -142,6 +155,9 @@
             overflow: auto;
             .search-menu {
                 display: flex;
+                .el-form-item {
+                    margin-bottom: 15px;
+                }
             }
         }
     }
