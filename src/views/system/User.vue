@@ -3,17 +3,29 @@
         <div class="tree-box">
             <el-input
                     type="text"
-                    v-model="queryInfo"
+                    v-model="filterText"
                     placeholder="请输入部门名称"
                     size="small"
+                    clearable
                     prefix-icon="el-icon-search">
             </el-input>
+            <common-card>
+                <div class="tree-node-info">
+                    <div><span class="depart-label">部门代号：</span><span>{{currentNode.id || '请选择节点'}}</span></div>
+                    <div><span class="depart-label">部门名称：</span><span>{{currentNode.label || '请选择节点'}}</span></div>
+                    <div><span class="depart-label">上级部门代号：</span><span>{{currentNode.parentId || '请选择节点'}}</span></div>
+                    <div><span class="depart-label">上级部门：</span><span>{{currentNode.parentLabel || '请选择节点'}}</span></div>
+                </div>
+            </common-card>
             <el-tree
                     :data="treeData"
+                    ref="departTree"
                     :props="treeProps"
                     highlight-current
                     node-key="id"
+                    @node-click="getCurrentNodeInfo"
                     :default-expanded-keys="[10]"
+                    :filter-node-method="filterNode"
                     accordion>
             </el-tree>
         </div>
@@ -69,8 +81,9 @@
 	    components: {CommonCard, TablePagination},
 	    data() {
 			return {
-				queryInfo: '',
                 treeData: [],
+				currentNode: {},
+				filterText: '',
 				treeProps: {
                     label: data => {
                     	return `[${data.id}] ` + data.label
@@ -112,6 +125,11 @@
                 },
 			}
 		},
+	    watch: {
+		    filterText(val) {
+			    this.$refs.departTree.filter(val);
+		    }
+	    },
         methods: {
 			/** 分页组件中每页显示的数据变化时调用 */
 	        handleSizeChange(val) {
@@ -128,12 +146,24 @@
             /** 将数据导出为Excel文件 */
 	        exportData() {
 	        	exportToExcelFile(document.querySelector('.el-table'))
+            },
+            /** 获取当前选择节点的数据 */
+            getCurrentNodeInfo(data, node) {
+	            console.log(data, node);
+                this.currentNode = data
+	            this.currentNode.parentLabel = node.parent.data.label
+	            this.currentNode.parentId = node.parent.data.id
+            },
+            /** 过滤节点 */
+	        filterNode(value, data) {
+	            if (!value) return true;
+	            return data.label.indexOf(value) !== -1;
             }
         },
         created() {
 			this.treeData = user_tree_data                          // 获取表格数据
             this.tableConfig.columns = user_columns                 // 获取表格配置
-        }
+        },
     }
 </script>
 
@@ -146,6 +176,20 @@
         .tree-box {
             margin-right: 20px;
             flex: 0.35;
+            min-width: 230px;
+            overflow: auto;
+            .tree-node-info {
+                font-size: 14px;
+                color: #606266;
+                div {
+                    padding: 3px;
+                    display: flex;
+                    justify-content: space-between;
+                    .depart-label {
+                        color: #8c939d;
+                    }
+                }
+            }
             .el-input {
                 margin-bottom: 15px;
             }
