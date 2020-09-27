@@ -6,6 +6,17 @@
                 show-overflow-tooltip
                 height="528"
                 :header-cell-style="{background: '#F0F7FF', color: '#666'}">
+            <el-table-column
+                    type="selection"
+                    align="center"
+                    width="55">
+            </el-table-column>
+            <el-table-column
+                    type="index"
+                    align="center"
+                    label="用户编号"
+                    width="100">
+            </el-table-column>
             <template v-for="column in tableConfig.columns">
                 <el-table-column
                         v-if="column.slot"
