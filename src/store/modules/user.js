@@ -1,10 +1,13 @@
+import {getToken, setToken} from "@/utils/token"
+import {login} from "@/api/login";
+
 const user = {
 	state: {
 		username: '',
 		id: '',
 		roles: [],
 		permissions: [],
-		token: ''
+		token: getToken()
 	},
 	mutations: {
 		SET_USERNAME(state, username) {
@@ -21,6 +24,19 @@ const user = {
 		},
 		SET_TOKEN(state, token) {
 			state.token = token
+		}
+	},
+	actions: {
+		Login(context, userInfo) {
+			return new Promise((resolve, reject) => {
+				login(userInfo).then(res => {
+					setToken(res.data.token)
+					context.commit('SET_TOKEN', res.data.token)
+					resolve()
+				}).catch(error => {
+					reject(error)
+				})
+			})
 		}
 	}
 }

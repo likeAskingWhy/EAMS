@@ -2,7 +2,7 @@
  * @description student-档案管理接口
  * */
 
-import request from "../../utils/request";
+import request from "../../utils/request"
 
 /**
  * @description 新建档案

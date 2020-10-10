@@ -3,7 +3,7 @@ import Vue from 'vue'
 import router from '../router'
 
 const request = axios.create({
-	baseURL: 'http://192.168.43.245:3005/v1/api',
+	baseURL: 'http://192.168.1.144:3005/v1/api',
 	timeout: 5000
 })
 
