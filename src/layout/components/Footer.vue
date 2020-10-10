@@ -17,5 +17,8 @@
         border-top: 1px solid #ddd;
         line-height: 30px;
         padding: 0 20px;
+        color: #8c939d;
+        word-spacing: 2px;
+        font-family: "Microsoft JhengHei";
     }
 </style>

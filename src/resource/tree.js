@@ -8,7 +8,7 @@ export const user_tree_data = [
 		id: 1,
 		children: [
 			{
-				label: '校内机构',
+				label: '校内部门',
 				value: 10,
 				id: 10,
 				children: [
@@ -25,7 +25,7 @@ export const user_tree_data = [
 				]
 			},
 			{
-				label: '教学机构',
+				label: '教学部门',
 				value: 20,
 				id: 20,
 				children: [
@@ -58,6 +58,16 @@ export const user_tree_data = [
 					{label: '外联部', value: 3008, id: 3008},
 					{label: '实践部', value: 3009, id: 3009},
 				]
+			},
+			{
+				label: '教师组',
+				value: 40,
+				id: 40
+			},
+			{
+				label: '学生组',
+				value: 50,
+				id: 50
 			}
 		]
 	}

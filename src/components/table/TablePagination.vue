@@ -4,8 +4,10 @@
         <el-table
                 :data="sliceTableData"
                 show-overflow-tooltip
+                ref="multipleTable"
                 height="528"
-                :header-cell-style="{background: '#F0F7FF', color: '#666'}">
+                @selection-change="handleSelectionChange"
+                :header-cell-style="{background: '#409EFF', color: '#fff'}">
             <el-table-column
                     type="selection"
                     align="center"
@@ -109,7 +111,11 @@
             /** 当前页码发生变化时触发 */
 	        handleCurrentChange(val) {
 	        	this.$emit('handleCurrentChange', val)
-            }
+            },
+            /** 选中表格后触发 */
+	        handleSelectionChange(val) {
+                this.$emit('handleSelectionChange', val)
+            },
         }
 	}
 </script>
