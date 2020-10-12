@@ -10,7 +10,12 @@
             false-label="unchecked"
         >记住密码</el-checkbox>
       </div>
-      <el-form label-width="100px" :model="userInfo" :rules="rules" ref="loginForm">
+      <el-form
+          label-width="100px"
+          :model="userInfo"
+          :rules="rules"
+          @keyup.native.enter="handleLogin"
+          ref="loginForm">
         <el-form-item label="用户名：" prop="username">
           <el-input
               type="text"
@@ -44,6 +49,7 @@
 
 <script>
   import Cookies from 'js-cookie'
+  import {encrypt} from "@/utils/tools"
 
   export default {
     name: "Login",
