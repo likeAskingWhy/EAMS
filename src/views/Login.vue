@@ -17,18 +17,11 @@
           @keyup.native.enter="handleLogin"
           ref="loginForm">
         <el-form-item label="用户名：" prop="username">
-          <el-autocomplete
-              v-model="userInfo.username"
-              popper-class="my-autocomplete"
-              style="width: 100%"
-              :fetch-suggestions="querySearch"
-              @select="handleSelect"
-              placeholder="请输入用户名">
-            <template slot-scope="{ item }">
-              <span class="username">账号：{{ item.username }}</span>
-              <div class="password">密码：●●●●●●●●●●</div>
-            </template>
-          </el-autocomplete>
+          <el-popover placement="bottom-start" width="285" v-model="visible">
+            <div slot="reference">
+              <el-input placeholder="请输入用户名" v-model="userInfo.username" @focus="handleFocus" @blur="handleBlur"></el-input>
+            </div>
+          </el-popover>
         </el-form-item>
         <el-form-item label="用户密码：" prop="password">
           <el-input
@@ -68,6 +61,7 @@
           password: '',
           checked: 'unchecked',
         },
+        visible: false,
         userInfoOptions: [],
         rules: {
           username: [
@@ -81,7 +75,6 @@
     },
     created() {
       this.userInfoOptions = Cookies.getJSON('userInfoList')
-      console.log(this.userInfoOptions);
     },
     methods: {
       handleLogin() {
@@ -89,7 +82,7 @@
           if (valid) {
             this.loading = true
             if (this.userInfo.checked === 'checked') {
-              let userInfoList = []
+              let userInfoList = this.userInfoOptions
               if (!userInfoList.includes(this.userInfo)) userInfoList.push(this.userInfo)
               Cookies.set('userInfoList', userInfoList, {expires: 30})
             } else {
@@ -112,21 +105,11 @@
       handleReset() {
         this.$refs.loginForm.resetFields()
       },
-      querySearch(queryString, cb) {
-        let userInfoOptions = this.userInfoOptions
-        let results = queryString ? userInfoOptions.filter(this.createFilter(queryString)) : userInfoOptions;
-        // 调用 callback 返回建议列表的数据
-        cb(results)
+      handleFocus() {
+        this.visible = true
       },
-      createFilter(queryString) {
-        return (option) => {
-          return (option.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        }
-      },
-      handleSelect(data) {
-        this.userInfo.username = data.username
-        this.userInfo.password = data.password
-        this.userInfo.checked = data.checked
+      handleBlur() {
+        this.visible = false
       }
     }
   }
