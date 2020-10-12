@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from "../layout/Layout"
 import Empty from "../layout/Empty"
+import {getToken} from "@/utils/token";
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (!getToken()) return next('/login')
+  next();
 })
 
 export default router

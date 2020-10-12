@@ -4,6 +4,7 @@ import getters from "./getters"
 import sidebar from "./modules/sidebar"
 import breadcrumb from "./modules/breadcrumb"
 import tabs from "./modules/tabs"
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
   modules: {
     sidebar,
     breadcrumb,
-    tabs
+    tabs,
+    user,
   },
   getters
 })

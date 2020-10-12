@@ -111,9 +111,6 @@
                             inactive-value="disable"
                     ></el-switch>
                 </template>
-                <template v-slot:department="slot">
-                    {{slot.scope.row.department.join(' - ')}}
-                </template>
             </table-pagination>
         </div>
         <user-form

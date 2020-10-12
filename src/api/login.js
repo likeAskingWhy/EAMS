@@ -2,7 +2,7 @@
  * @description login-登录接口
  * */
 
-import request from "../../utils/request"
+import request from "@/utils/request";
 
 /**
  * @description 登录系统

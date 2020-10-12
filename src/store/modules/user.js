@@ -1,6 +1,6 @@
 import {getToken, setToken} from "@/utils/token"
-import {login} from "@/api/login";
-
+import {login} from "@/api/login"
+import router from "@/router"
 const user = {
 	state: {
 		username: '',
@@ -27,15 +27,17 @@ const user = {
 		}
 	},
 	actions: {
-		Login(context, userInfo) {
+		Login({commit}, userInfo) {
 			return new Promise((resolve, reject) => {
-				login(userInfo).then(res => {
-					setToken(res.data.token)
-					context.commit('SET_TOKEN', res.data.token)
-					resolve()
-				}).catch(error => {
-					reject(error)
-				})
+				setTimeout(function () {
+					login(userInfo).then(res => {
+						setToken(res.data.token)
+						commit('SET_TOKEN', res.data.token)
+						resolve()
+					}).catch(error => {
+						reject(error)
+					})
+				}, 1000)
 			})
 		}
 	}
