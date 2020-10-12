@@ -5,7 +5,7 @@
         <span>你好，请登录</span>
         <el-checkbox
             style="float: right"
-            v-model="checked"
+            v-model="userInfo.checked"
             true-label="checked"
             false-label="unchecked"
         >记住密码</el-checkbox>
@@ -17,10 +17,18 @@
           @keyup.native.enter="handleLogin"
           ref="loginForm">
         <el-form-item label="用户名：" prop="username">
-          <el-input
-              type="text"
+          <el-autocomplete
               v-model="userInfo.username"
-              placeholder="请输入用户名" />
+              popper-class="my-autocomplete"
+              style="width: 100%"
+              :fetch-suggestions="querySearch"
+              @select="handleSelect"
+              placeholder="请输入用户名">
+            <template slot-scope="{ item }">
+              <span class="username">账号：{{ item.username }}</span>
+              <div class="password">密码：●●●●●●●●●●</div>
+            </template>
+          </el-autocomplete>
         </el-form-item>
         <el-form-item label="用户密码：" prop="password">
           <el-input
@@ -49,18 +57,18 @@
 
 <script>
   import Cookies from 'js-cookie'
-  import {encrypt} from "@/utils/tools"
 
   export default {
     name: "Login",
     data() {
       return {
         loading: false,
-        checked: 'unchecked',
         userInfo: {
           username: '',
-          password: ''
+          password: '',
+          checked: 'unchecked',
         },
+        userInfoOptions: [],
         rules: {
           username: [
             {required: true, message: '用户名不能为空', trigger: 'blur'}
@@ -72,23 +80,24 @@
       }
     },
     created() {
-      this.userInfo.username = Cookies.get('username') || ''
-      this.userInfo.password = Cookies.get('password') || ''
-      this.checked = Cookies.get('remember') || 'unchecked'
+      this.userInfoOptions = Cookies.getJSON('userInfoList')
+      console.log(this.userInfoOptions);
     },
     methods: {
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            if (this.checked === 'checked') {
-              Cookies.set('username', this.userInfo.username, {expires: 7})
-              Cookies.set('password', this.userInfo.password, {expires: 7})
-              Cookies.set('remember', this.checked, {expires: 7})
+            if (this.userInfo.checked === 'checked') {
+              let userInfoList = []
+              if (!userInfoList.includes(this.userInfo)) userInfoList.push(this.userInfo)
+              Cookies.set('userInfoList', userInfoList, {expires: 30})
             } else {
-              Cookies.remove('username')
-              Cookies.remove('password')
-              Cookies.remove('remember')
+              this.userInfoOptions.forEach((v, i) => {
+                if (v.username === this.userInfo.username) this.userInfoOptions.splice(i, 1)
+              })
+              Cookies.remove('userInfoList')
+              Cookies.set('userInfoList', this.userInfoOptions, {expires: 30})
             }
             this.$store.dispatch('Login', this.userInfo).then(() => {
               this.$router.push('/')
@@ -102,6 +111,22 @@
       },
       handleReset() {
         this.$refs.loginForm.resetFields()
+      },
+      querySearch(queryString, cb) {
+        let userInfoOptions = this.userInfoOptions
+        let results = queryString ? userInfoOptions.filter(this.createFilter(queryString)) : userInfoOptions;
+        // 调用 callback 返回建议列表的数据
+        cb(results)
+      },
+      createFilter(queryString) {
+        return (option) => {
+          return (option.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        }
+      },
+      handleSelect(data) {
+        this.userInfo.username = data.username
+        this.userInfo.password = data.password
+        this.userInfo.checked = data.checked
       }
     }
   }
@@ -116,6 +141,24 @@
       left: 50%;
       top: 30%;
       transform: translate(-50%, -30%);
+      .my-autocomplete {
+        li {
+          line-height: normal;
+          padding: 7px;
+
+          .username {
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+          .password {
+            font-size: 12px;
+            color: #b4b4b4;
+          }
+          .highlighted .addr {
+            color: #ddd;
+          }
+        }
+      }
     }
   }
 </style>
