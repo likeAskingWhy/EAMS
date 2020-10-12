@@ -6,7 +6,8 @@
                 :class="$store.getters.isCollapse? 'icon-toggle-right': 'icon-toggle-left'"
         >
         </div>
-        <Breadcrumb></Breadcrumb>
+        <Breadcrumb style="flex: 1"></Breadcrumb>
+        <el-button style="float: right; margin-right: 20px" size="small" type="danger" @click="logout">退出登录</el-button>
     </div>
 </template>
 
@@ -17,7 +18,15 @@
 		name: "Topbar",
 		components: {
 			Breadcrumb
-		}
+		},
+    methods: {
+		  logout() {
+        this.$store.dispatch('Logout').then(() => {
+          this.$router.push('/login')
+          this.$message.success('您已退出登录~')
+        })
+      }
+    }
 	}
 </script>
 

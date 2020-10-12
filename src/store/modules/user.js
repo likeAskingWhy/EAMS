@@ -1,4 +1,4 @@
-import {getToken, setToken} from "@/utils/token"
+import {getToken, removeToken, setToken} from "@/utils/token"
 import {login} from "@/api/login"
 import router from "@/router"
 const user = {
@@ -38,6 +38,17 @@ const user = {
 						reject(error)
 					})
 				}, 1000)
+			})
+		},
+		Logout({commit}) {
+			return new Promise(((resolve, reject) => {
+				commit('SET_TOKEN', '')
+				commit('SET_ROLES', [])
+				commit('SET_PERMISSIONS', [])
+				removeToken()
+				resolve()
+			})).catch(error => {
+				reject(error)
 			})
 		}
 	}

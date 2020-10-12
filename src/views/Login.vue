@@ -3,7 +3,12 @@
     <el-card shadow="hover">
       <div slot="header">
         <span>你好，请登录</span>
-        <el-checkbox style="float: right" v-model="checked">记住密码</el-checkbox>
+        <el-checkbox
+            style="float: right"
+            v-model="checked"
+            true-label="checked"
+            false-label="unchecked"
+        >记住密码</el-checkbox>
       </div>
       <el-form label-width="100px" :model="userInfo" :rules="rules" ref="loginForm">
         <el-form-item label="用户名：" prop="username">
@@ -45,7 +50,7 @@
     data() {
       return {
         loading: false,
-        checked: false,
+        checked: 'unchecked',
         userInfo: {
           username: '',
           password: ''
@@ -63,14 +68,14 @@
     created() {
       this.userInfo.username = Cookies.get('username') || ''
       this.userInfo.password = Cookies.get('password') || ''
-      this.checked = Cookies.get('remember') || false
+      this.checked = Cookies.get('remember') || 'unchecked'
     },
     methods: {
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true
-            if (this.checked) {
+            if (this.checked === 'checked') {
               Cookies.set('username', this.userInfo.username, {expires: 7})
               Cookies.set('password', this.userInfo.password, {expires: 7})
               Cookies.set('remember', this.checked, {expires: 7})
