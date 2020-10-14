@@ -17,11 +17,9 @@
           @keyup.native.enter="handleLogin"
           ref="loginForm">
         <el-form-item label="用户名：" prop="username">
-          <el-popover placement="bottom-start" width="285" v-model="visible">
-            <div slot="reference">
-              <el-input placeholder="请输入用户名" v-model="userInfo.username" @focus="handleFocus" @blur="handleBlur"></el-input>
-            </div>
-          </el-popover>
+          <el-input
+              v-model="userInfo.username"
+              placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item label="用户密码：" prop="password">
           <el-input
@@ -61,8 +59,6 @@
           password: '',
           checked: 'unchecked',
         },
-        visible: false,
-        userInfoOptions: [],
         rules: {
           username: [
             {required: true, message: '用户名不能为空', trigger: 'blur'}
@@ -73,8 +69,10 @@
         }
       }
     },
-    created() {
-      this.userInfoOptions = Cookies.getJSON('userInfoList')
+    mounted() {
+      this.userInfo.username = Cookies.get('username')
+      this.userInfo.password = Cookies.get('password')
+      this.userInfo.checked = Cookies.get('checked')
     },
     methods: {
       handleLogin() {
@@ -82,15 +80,12 @@
           if (valid) {
             this.loading = true
             if (this.userInfo.checked === 'checked') {
-              let userInfoList = this.userInfoOptions
-              if (!userInfoList.includes(this.userInfo)) userInfoList.push(this.userInfo)
-              Cookies.set('userInfoList', userInfoList, {expires: 30})
+              Cookies.set('username', this.userInfo.username, {expires: 7})
+              Cookies.set('password', this.userInfo.password, {expires: 7})
+              Cookies.set('checked', this.userInfo.checked, {expires: 7})
             } else {
-              this.userInfoOptions.forEach((v, i) => {
-                if (v.username === this.userInfo.username) this.userInfoOptions.splice(i, 1)
-              })
-              Cookies.remove('userInfoList')
-              Cookies.set('userInfoList', this.userInfoOptions, {expires: 30})
+              Cookies.remove('password')
+              Cookies.remove('checked')
             }
             this.$store.dispatch('Login', this.userInfo).then(() => {
               this.$router.push('/')
@@ -105,12 +100,6 @@
       handleReset() {
         this.$refs.loginForm.resetFields()
       },
-      handleFocus() {
-        this.visible = true
-      },
-      handleBlur() {
-        this.visible = false
-      }
     }
   }
 </script>
