@@ -70,9 +70,9 @@
       }
     },
     mounted() {
-      this.userInfo.username = Cookies.get('username')
-      this.userInfo.password = Cookies.get('password')
-      this.userInfo.checked = Cookies.get('checked')
+      this.userInfo.username = Cookies.get('username') || ''
+      this.userInfo.password = Cookies.get('password') || ''
+      this.userInfo.checked = Cookies.get('checked') || ''
     },
     methods: {
       handleLogin() {
@@ -113,24 +113,6 @@
       left: 50%;
       top: 30%;
       transform: translate(-50%, -30%);
-      .my-autocomplete {
-        li {
-          line-height: normal;
-          padding: 7px;
-
-          .username {
-            text-overflow: ellipsis;
-            overflow: hidden;
-          }
-          .password {
-            font-size: 12px;
-            color: #b4b4b4;
-          }
-          .highlighted .addr {
-            color: #ddd;
-          }
-        }
-      }
     }
   }
 </style>
